@@ -1,0 +1,12 @@
+[package]
+name = "byte-ops"
+version = "0.1.0"
+authors = ["Nikolai Vazquez"]
+
+[dev-dependencies]
+rand = "0.4"
+
+[features]
+default = ["std"]
+std     = []
+simd    = []
