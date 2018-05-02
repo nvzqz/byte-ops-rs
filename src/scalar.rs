@@ -13,10 +13,10 @@ macro_rules! impl_bytes_scalar {
             }
 
             #[inline]
-            fn is(self, byte: u8) -> bool { self == Self::splat(byte) }
+            fn is(&self, byte: u8) -> bool { *self == Self::splat(byte) }
 
             #[inline]
-            fn contains(self, byte: u8) -> bool {
+            fn contains(&self, byte: u8) -> bool {
                 (self ^ Self::splat(byte)).contains_zero()
             }
 
@@ -26,7 +26,7 @@ macro_rules! impl_bytes_scalar {
             // for bytes where the borrow propagated all the way to the most
             // significant bit."
             #[inline]
-            fn contains_zero(self) -> bool {
+            fn contains_zero(&self) -> bool {
                 self.wrapping_sub(LO as Self) & !self & HI as Self != 0
             }
         }
@@ -36,13 +36,13 @@ macro_rules! impl_bytes_scalar {
             fn splat(byte: u8) -> Self { $t::splat(byte) as Self }
 
             #[inline]
-            fn is(self, byte: u8) -> bool { (self as $t).is(byte) }
+            fn is(&self, byte: u8) -> bool { (*self as $t).is(byte) }
 
             #[inline]
-            fn contains(self, byte: u8) -> bool { (self as $t).contains(byte) }
+            fn contains(&self, byte: u8) -> bool { (*self as $t).contains(byte) }
 
             #[inline]
-            fn contains_zero(self) -> bool { (self as $t).contains_zero() }
+            fn contains_zero(&self) -> bool { (*self as $t).contains_zero() }
         }
     )+ }
 }

@@ -12,16 +12,16 @@ macro_rules! impl_bytes_multi {
             }
 
             #[inline]
-            fn is(self, byte: u8) -> bool {
+            fn is(&self, byte: u8) -> bool {
                 #[cfg(feature = "simd")]
                 {
-                    let simd: $s = unsafe { mem::transmute(self) };
+                    let simd: $s = unsafe { mem::transmute(*self) };
                     simd.is(byte)
                 }
                 #[cfg(not(feature = "simd"))]
                 {
                     type Arr = [usize; $n / mem::size_of::<usize>()];
-                    let arr: Arr = unsafe { mem::transmute(self) };
+                    let arr: Arr = unsafe { mem::transmute(*self) };
 
                     for &word in arr.iter() {
                         if !word.is(byte) {
@@ -33,10 +33,10 @@ macro_rules! impl_bytes_multi {
             }
 
             #[inline]
-            fn contains(self, byte: u8) -> bool {
+            fn contains(&self, byte: u8) -> bool {
                 #[cfg(feature = "simd")]
                 {
-                    let simd: $s = unsafe { mem::transmute(self) };
+                    let simd: $s = unsafe { mem::transmute(*self) };
                     simd.contains(byte)
                 }
                 #[cfg(not(feature = "simd"))]
@@ -44,10 +44,10 @@ macro_rules! impl_bytes_multi {
             }
 
             #[inline]
-            fn contains_zero(self) -> bool {
+            fn contains_zero(&self) -> bool {
                 #[cfg(feature = "simd")]
                 {
-                    let simd: $s = unsafe { mem::transmute(self) };
+                    let simd: $s = unsafe { mem::transmute(*self) };
                     simd.contains_zero()
                 }
                 #[cfg(not(feature = "simd"))]
@@ -73,13 +73,13 @@ macro_rules! impl_bytes_multi {
             fn splat(byte: u8) -> Self { Self::splat(byte) }
 
             #[inline]
-            fn is(self, byte: u8) -> bool {
-                self.eq(Self::splat(byte)).all()
+            fn is(&self, byte: u8) -> bool {
+                (*self).eq(Self::splat(byte)).all()
             }
 
             #[inline]
-            fn contains(self, byte: u8) -> bool {
-                self.eq(Self::splat(byte)).any()
+            fn contains(&self, byte: u8) -> bool {
+                (*self).eq(Self::splat(byte)).any()
             }
          }
     )+ }
