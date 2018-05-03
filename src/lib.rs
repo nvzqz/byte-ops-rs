@@ -28,18 +28,14 @@ pub trait Bytes {
 
     /// Returns whether every byte in `self` is zero.
     #[inline]
-    fn is_zero(&self) -> bool {
-        self.is(0)
-    }
+    fn is_zero(&self) -> bool { self.is(0) }
 
     /// Returns whether `self` contains `byte`.
     fn contains(&self, byte: u8) -> bool;
 
     /// Returns whether `self` contains a zero byte.
     #[inline]
-    fn contains_zero(&self) -> bool {
-        self.contains(0)
-    }
+    fn contains_zero(&self) -> bool { self.contains(0) }
 }
 
 impl Bytes for u8 {
