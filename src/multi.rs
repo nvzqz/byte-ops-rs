@@ -5,12 +5,12 @@ use super::*;
 // Implementations for multiples of `mem::size_of::<usize>()`
 macro_rules! impl_bytes_multi {
     ($($n:expr => $s:ident,)+) => { $(
-        impl Bytes for [u8; $n] {
+        impl SizedBytes for [u8; $n] {
             #[inline]
-            fn splat(byte: u8) -> Self {
-                [byte; $n]
-            }
+            fn splat(byte: u8) -> Self { [byte; $n] }
+        }
 
+        impl Bytes for [u8; $n] {
             #[inline]
             fn is(&self, byte: u8) -> bool {
                 #[cfg(feature = "simd")]
@@ -68,10 +68,13 @@ macro_rules! impl_bytes_multi {
         }
 
         #[cfg(feature = "simd")]
-        impl Bytes for $s {
+        impl SizedBytes for $s {
             #[inline]
             fn splat(byte: u8) -> Self { Self::splat(byte) }
+        }
 
+        #[cfg(feature = "simd")]
+        impl Bytes for $s {
             #[inline]
             fn is(&self, byte: u8) -> bool {
                 (*self).eq(Self::splat(byte)).all()

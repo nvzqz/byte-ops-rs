@@ -7,12 +7,6 @@ macro_rules! impl_bytes_scalar {
     ($($t:ident $u:ident)+) => { $(
         impl Bytes for $t {
             #[inline]
-            fn splat(byte: u8) -> Self {
-                // Spread `byte`'s bits across each starting bit in `LO`
-                LO as Self * byte as Self
-            }
-
-            #[inline]
             fn is(&self, byte: u8) -> bool { *self == Self::splat(byte) }
 
             #[inline]
@@ -33,9 +27,6 @@ macro_rules! impl_bytes_scalar {
 
         impl Bytes for $u {
             #[inline]
-            fn splat(byte: u8) -> Self { $t::splat(byte) as Self }
-
-            #[inline]
             fn is(&self, byte: u8) -> bool { (*self as $t).is(byte) }
 
             #[inline]
@@ -43,6 +34,19 @@ macro_rules! impl_bytes_scalar {
 
             #[inline]
             fn contains_zero(&self) -> bool { (*self as $t).contains_zero() }
+        }
+
+        impl SizedBytes for $t {
+            #[inline]
+            fn splat(byte: u8) -> Self {
+                // Spread `byte`'s bits across each starting bit in `LO`
+                LO as Self * byte as Self
+            }
+        }
+
+        impl SizedBytes for $u {
+            #[inline]
+            fn splat(byte: u8) -> Self { $t::splat(byte) as Self }
         }
     )+ }
 }

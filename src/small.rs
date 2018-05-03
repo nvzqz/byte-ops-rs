@@ -7,9 +7,6 @@ macro_rules! impl_bytes_small_array {
     ($($n:expr => $s:ident $i:ident,)+) => { $(
         impl Bytes for [u8; $n] {
             #[inline]
-            fn splat(byte: u8) -> Self { [byte; $n] }
-
-            #[inline]
             fn is(&self, byte: u8) -> bool {
                 for &b in self.iter() {
                     if b != byte {
@@ -41,6 +38,11 @@ macro_rules! impl_bytes_small_array {
                     },
                 }
             }
+        }
+
+        impl SizedBytes for [u8; $n] {
+            #[inline]
+            fn splat(byte: u8) -> Self { [byte; $n] }
         }
     )+ };
 }
