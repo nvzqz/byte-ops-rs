@@ -1,6 +1,8 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(feature = "simd", feature(stdsimd))]
 
+#![deny(unused_variables)]
+
 #[cfg(test)]
 extern crate rand;
 
@@ -48,12 +50,12 @@ impl Bytes for u8 {
 
 impl Bytes for [u8] {
     #[inline]
-    fn is(&self, byte: u8) -> bool {
+    fn is(&self, _byte: u8) -> bool {
         unimplemented!()
     }
 
     #[inline]
-    fn contains(&self, byte: u8) -> bool {
+    fn contains(&self, _byte: u8) -> bool {
         unimplemented!()
     }
 }
