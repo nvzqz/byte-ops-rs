@@ -49,9 +49,6 @@ impl Bytes for u8 {
 
     #[inline]
     fn contains(&self, byte: u8) -> bool { *self == byte }
-
-    #[inline]
-    fn is_zero(&self) -> bool { *self == 0 }
 }
 
 // Alignment code used by the `bytecount` crate
