@@ -127,8 +127,57 @@ impl SizedBytes for u8 {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use rand::{Rng, thread_rng};
 
     assert_obj_safe!(__; Bytes);
+
+    #[test]
+    fn array_contains() {
+        let mut rng = thread_rng();
+
+        macro_rules! test {
+            ($($n:expr)+) => { $({
+                let arr: [u8; $n] = rng.gen();
+
+                for &b in arr.iter() {
+                    assert!(arr.contains(b), "{:?} not found in {:?}", b, arr);
+                }
+            })+ };
+        }
+
+        // Test up to 32 due to current trait system,
+        // and 64 uses the same implementations as 32
+        test! { 2 4 8 16 32 }
+    }
+
+    #[cfg(feature = "simd")]
+    #[test]
+    fn simd_contains() {
+        use core::mem;
+
+        let mut rng = thread_rng();
+
+        macro_rules! test {
+            ($($n:expr => $s:ident,)+) => { $({
+                let arr: [u8; $n] = rng.gen();
+                let val: $s = unsafe { mem::transmute(arr) };
+
+                for &b in arr.iter() {
+                    assert!(val.contains(b), "{:?} not found in {:?}", b, val);
+                }
+            })+ };
+        }
+
+        // Test up to 32 due to current trait system
+        test! {
+            // 2  => u8x2,
+            // 4  => u8x4,
+            // 8  => u8x8,
+            16 => u8x16,
+            32 => u8x32,
+            // 64 => u8x64,
+        }
+    }
 
     #[test]
     fn slice() {
