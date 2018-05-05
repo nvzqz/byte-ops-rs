@@ -14,10 +14,8 @@ macro_rules! impl_bytes_multi {
             #[inline]
             fn is(&self, byte: u8) -> bool {
                 #[cfg(feature = "simd")]
-                {
-                    let simd: $s = unsafe { mem::transmute(*self) };
-                    simd.is(byte)
-                }
+                { $s::load_unaligned(self).is(byte) }
+
                 #[cfg(not(feature = "simd"))]
                 {
                     type Arr = [usize; $n / mem::size_of::<usize>()];
@@ -35,10 +33,8 @@ macro_rules! impl_bytes_multi {
             #[inline]
             fn contains(&self, byte: u8) -> bool {
                 #[cfg(feature = "simd")]
-                {
-                    let simd: $s = unsafe { mem::transmute(*self) };
-                    simd.contains(byte)
-                }
+                { $s::load_unaligned(self).contains(byte) }
+
                 #[cfg(not(feature = "simd"))]
                 { self[..].contains(&byte) }
             }
