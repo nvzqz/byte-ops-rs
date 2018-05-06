@@ -1,3 +1,4 @@
+#[cfg(not(feature = "simd"))]
 use core::mem;
 
 use super::*;
@@ -21,7 +22,7 @@ macro_rules! impl_bytes_multi {
                     type Arr = [usize; $n / mem::size_of::<usize>()];
                     let arr: Arr = unsafe { mem::transmute(*self) };
 
-                    for &word in arr.iter() {
+                    for word in arr.iter() {
                         if !word.is(byte) {
                             return false;
                         }
@@ -36,29 +37,16 @@ macro_rules! impl_bytes_multi {
                 { $s::load_unaligned(self).contains(byte) }
 
                 #[cfg(not(feature = "simd"))]
-                { self[..].contains(&byte) }
-            }
-
-            #[inline]
-            fn contains_zero(&self) -> bool {
-                #[cfg(feature = "simd")]
                 {
-                    let simd: $s = unsafe { mem::transmute(*self) };
-                    simd.contains_zero()
-                }
-                #[cfg(not(feature = "simd"))]
-                {
-                    const N: usize = $n / mem::size_of::<usize>();
+                    type Arr = [usize; $n / mem::size_of::<usize>()];
+                    let arr: Arr = unsafe { mem::transmute(*self) };
 
-                    let array: [usize; N] = unsafe {
-                        mem::transmute_copy(&self)
-                     };
-                     for val in array.iter() {
-                        if val.contains_zero() {
+                    for word in arr.iter() {
+                        if word.contains(byte) {
                             return true;
                         }
                     }
-                     false
+                    false
                 }
             }
         }
