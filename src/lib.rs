@@ -16,6 +16,7 @@ use std as core;
 #[cfg(feature = "simd")]
 use core::simd::*;
 
+mod large;
 mod multi;
 mod scalar;
 mod small;
