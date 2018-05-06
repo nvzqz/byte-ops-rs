@@ -189,9 +189,9 @@ mod tests {
 
         // Test up to 32 due to current trait system
         test! {
-            // 2  => u8x2,
-            // 4  => u8x4,
-            // 8  => u8x8,
+            2  => u8x2,
+            4  => u8x4,
+            8  => u8x8,
             16 => u8x16,
             32 => u8x32,
             // 64 => u8x64,
