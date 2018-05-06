@@ -48,6 +48,11 @@ macro_rules! impl_bytes_small_array {
             }
 
             #[inline]
+            fn is_zero(&self) -> bool {
+                unsafe { mem::transmute::<_, $i>(*self) == 0 }
+            }
+
+            #[inline]
             fn contains(&self, byte: u8) -> bool {
                 unsafe { mem::transmute::<_, [u8; $n]>(*self).contains(byte) }
             }
