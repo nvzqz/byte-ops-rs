@@ -138,6 +138,20 @@ mod tests {
 
     assert_obj_safe!(__; Bytes);
 
+    macro_rules! all_bytes {
+        ($f:expr) => {
+            let mut n = 0u8;
+            loop {
+                $f(n);
+                if n == u8::max_value() {
+                    break;
+                } else {
+                    n += 1;
+                }
+            }
+        };
+    }
+
     #[test]
     fn array_contains() {
         let mut rng = thread_rng();
@@ -145,10 +159,9 @@ mod tests {
         macro_rules! test {
             ($($n:expr)+) => { $({
                 let arr: [u8; $n] = rng.gen();
-
-                for &b in arr.iter() {
-                    assert!(arr.contains(b), "{:?} not found in {:?}", b, arr);
-                }
+                all_bytes!(|n| {
+                    assert_eq!(arr.contains(n), arr[..].contains(&n));
+                });
             })+ };
         }
 
@@ -168,10 +181,9 @@ mod tests {
             ($($n:expr => $s:ident,)+) => { $({
                 let arr: [u8; $n] = rng.gen();
                 let val: $s = unsafe { mem::transmute(arr) };
-
-                for &b in arr.iter() {
-                    assert!(val.contains(b), "{:?} not found in {:?}", b, val);
-                }
+                all_bytes!(|n| {
+                    assert_eq!(val.contains(n), arr[..].contains(&n));
+                });
             })+ };
         }
 
