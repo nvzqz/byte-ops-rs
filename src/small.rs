@@ -24,14 +24,7 @@ macro_rules! impl_bytes_small_array {
             #[inline]
             fn contains(&self, byte: u8) -> bool {
                 match $n {
-                    2 => {
-                        for &b in self.iter() {
-                            if b == byte {
-                                return true;
-                            }
-                        }
-                        false
-                    },
+                    2 => self[0] == byte || self[1] == byte,
                     _ => {
                         let value: $i = unsafe { mem::transmute(*self) };
                         value.contains(byte)
