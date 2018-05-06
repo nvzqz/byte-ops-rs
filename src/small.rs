@@ -8,12 +8,14 @@ macro_rules! impl_bytes_small_array {
         impl Bytes for [u8; $n] {
             #[inline]
             fn is(&self, byte: u8) -> bool {
-                for &b in self.iter() {
-                    if b != byte {
-                        return false;
-                    }
+                match $n {
+                    // X xor Y equals 0 iff X equals Y
+                    2 => (self[0] ^ byte) | (self[1] ^ byte) == 0,
+                    _ => {
+                        let value: $i = unsafe { mem::transmute(*self) };
+                        value.is(byte)
+                    },
                 }
-                true
             }
 
             #[inline]
