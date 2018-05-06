@@ -1,6 +1,9 @@
+//! Perform common byte operations on arrays and slices, quickly.
+
 #![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(feature = "simd", feature(stdsimd))]
 
+#![deny(missing_docs)]
 #![deny(unused_variables)]
 
 #[cfg(test)]
