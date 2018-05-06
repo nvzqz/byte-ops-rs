@@ -153,14 +153,15 @@ mod tests {
     }
 
     #[test]
-    fn array_contains() {
+    fn array() {
         let mut rng = thread_rng();
 
         macro_rules! test {
             ($($n:expr)+) => { $({
                 let arr: [u8; $n] = rng.gen();
-                all_bytes!(|n| {
-                    assert_eq!(arr.contains(n), arr[..].contains(&n));
+                all_bytes!(|b| {
+                    assert_eq!(arr.contains(b), arr[..].contains(&b));
+                    assert_eq!(arr.is(b),       arr == [b; $n])
                 });
             })+ };
         }
@@ -172,7 +173,7 @@ mod tests {
 
     #[cfg(feature = "simd")]
     #[test]
-    fn simd_contains() {
+    fn simd() {
         use core::mem;
 
         let mut rng = thread_rng();
@@ -181,8 +182,9 @@ mod tests {
             ($($n:expr => $s:ident,)+) => { $({
                 let arr: [u8; $n] = rng.gen();
                 let val: $s = unsafe { mem::transmute(arr) };
-                all_bytes!(|n| {
-                    assert_eq!(val.contains(n), arr[..].contains(&n));
+                all_bytes!(|b| {
+                    assert_eq!(val.contains(b), arr[..].contains(&b));
+                    assert_eq!(val.is(b),       arr == [b; $n]);
                 });
             })+ };
         }
