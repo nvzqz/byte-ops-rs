@@ -11,9 +11,8 @@ macro_rules! impl_bytes_small_array {
                 match $n {
                     // X xor Y equals 0 iff X equals Y
                     2 => (self[0] ^ byte) | (self[1] ^ byte) == 0,
-                    _ => {
-                        let value: $i = unsafe { mem::transmute(*self) };
-                        value.is(byte)
+                    _ => unsafe {
+                        mem::transmute::<_, $i>(*self).is(byte)
                     },
                 }
             }
@@ -27,9 +26,8 @@ macro_rules! impl_bytes_small_array {
             fn contains(&self, byte: u8) -> bool {
                 match $n {
                     2 => self[0] == byte || self[1] == byte,
-                    _ => {
-                        let value: $i = unsafe { mem::transmute(*self) };
-                        value.contains(byte)
+                    _ => unsafe {
+                        mem::transmute::<_, $i>(*self).contains(byte)
                     },
                 }
             }
