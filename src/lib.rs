@@ -24,7 +24,10 @@ mod small;
 #[cfg(not(feature = "simd"))]
 type Batch = usize;
 
-#[cfg(feature = "simd")]
+#[cfg(all(feature = "simd", not(target_feature = "avx")))]
+type Batch = u8x16;
+
+#[cfg(all(feature = "simd", target_feature = "avx"))]
 type Batch = u8x32;
 
 /// A type that can be treated as a sequence of bytes.
