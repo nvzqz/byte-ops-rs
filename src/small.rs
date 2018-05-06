@@ -44,6 +44,25 @@ macro_rules! impl_bytes_small_array {
             #[inline]
             fn splat(byte: u8) -> Self { [byte; $n] }
         }
+
+        #[cfg(feature = "simd")]
+        impl Bytes for $s {
+            #[inline]
+            fn is(&self, byte: u8) -> bool {
+                unsafe { mem::transmute::<_, [u8; $n]>(*self).is(byte) }
+            }
+
+            #[inline]
+            fn contains(&self, byte: u8) -> bool {
+                unsafe { mem::transmute::<_, [u8; $n]>(*self).contains(byte) }
+            }
+        }
+
+        #[cfg(feature = "simd")]
+        impl SizedBytes for $s {
+            #[inline]
+            fn splat(byte: u8) -> Self { Self::splat(byte) }
+        }
     )+ };
 }
 
