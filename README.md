@@ -23,6 +23,8 @@ version  = "0.1.0"
 features = ["simd"]
 ```
 
+**Nightly only:** as of this writing, this is only available on Rust nightly.
+
 ### AVX
 
 When targeting x86, some extra performance can be gained by enabling [advanced
