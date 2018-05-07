@@ -23,8 +23,8 @@ features = ["simd"]
 ```
 
 Some extra performance can be gained by enabling `avx` when targeting x86 or
-x86_64. This comes with the tradeoff of less compatibility (see [CPUs with
-AVX](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#CPUs_with_AVX)).
+x86_64. This comes with a compatibility tradeoff. See [CPUs with
+AVX](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#CPUs_with_AVX).
 
 ```sh
 RUSTFLAGS="-C target-feature +avx"
