@@ -2,6 +2,14 @@
 name = "byte_ops"
 version = "0.1.0"
 authors = ["Nikolai Vazquez"]
+license = "MIT/Apache-2.0"
+readme = "README.md"
+repository = "https://github.com/nvzqz/byte-ops-rs"
+categories = ["algorithms", "no-std", "hardware-support"]
+description = "Common byte operations on arrays and slices"
+documentation = "https://docs.rs/byte_ops"
+keywords = ["byte", "simd"]
+include = ["Cargo.toml", "src/**/*.rs", "README*", "CHANGELOG*", "LICENSE*"]
 
 [dev-dependencies]
 rand = "0.4"
