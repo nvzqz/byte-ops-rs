@@ -14,8 +14,8 @@ contains all operations for this crate. As of this writing, they are:
 ## SIMD
 
 This crate contains [SIMD](https://en.wikipedia.org/wiki/SIMD)-accelerated
-implementations, which can be enabled via the `simd` feature. These operations
-are performed on values of 128 bits (or more).
+implementations, which can be enabled via the `simd` feature. This enables
+parallel operations on values with 128 bits (or more).
 
 ```toml
 [dependencies.byte-ops]
