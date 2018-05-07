@@ -11,6 +11,9 @@ contains all operations for this crate. As of this writing, they are:
 
 - `contains`: indicates whether _any byte_ in a value equals a certain byte.
 
+- `{first,last}_{eq,ne}{,_mut}`: returns a [mutable] reference to the first/last
+  byte that is [not] equal to a certain byte
+
 ## SIMD
 
 This crate contains [SIMD](https://en.wikipedia.org/wiki/SIMD)-accelerated
