@@ -49,6 +49,46 @@ macro_rules! impl_bytes_multi {
                     false
                 }
             }
+
+            #[inline]
+            fn first_eq(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn first_eq_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn first_ne(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn first_ne_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_eq(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_eq_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_ne(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_ne_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
+            }
         }
 
         #[cfg(feature = "simd")]
@@ -67,6 +107,46 @@ macro_rules! impl_bytes_multi {
             #[inline]
             fn contains(&self, byte: u8) -> bool {
                 (*self).eq(Self::splat(byte)).any()
+            }
+
+            #[inline]
+            fn first_eq(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn first_eq_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn first_ne(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn first_ne_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_eq(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_eq_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_ne(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_ne_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
             }
          }
     )+ }

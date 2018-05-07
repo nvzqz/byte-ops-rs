@@ -23,6 +23,46 @@ macro_rules! impl_bytes_scalar {
             fn contains_zero(&self) -> bool {
                 self.wrapping_sub(LO as Self) & !self & HI as Self != 0
             }
+
+            #[inline]
+            fn first_eq(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn first_eq_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn first_ne(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn first_ne_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_eq(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_eq_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_ne(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_ne_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
+            }
         }
 
         impl Bytes for $u {
@@ -34,6 +74,46 @@ macro_rules! impl_bytes_scalar {
 
             #[inline]
             fn contains_zero(&self) -> bool { (*self as $t).contains_zero() }
+
+            #[inline]
+            fn first_eq(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn first_eq_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn first_ne(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn first_ne_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_eq(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_eq_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_ne(&self, byte: u8) -> Option<&u8> {
+                unimplemented!()
+            }
+
+            #[inline]
+            fn last_ne_mut(&mut self, byte: u8) -> Option<&mut u8> {
+                unimplemented!()
+            }
         }
 
         impl SizedBytes for $t {

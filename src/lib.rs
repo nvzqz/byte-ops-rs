@@ -4,7 +4,6 @@
 #![cfg_attr(feature = "simd", feature(stdsimd))]
 
 #![deny(missing_docs)]
-#![deny(unused_variables)]
 
 #[cfg(test)]
 extern crate rand;
@@ -48,6 +47,36 @@ pub trait Bytes {
     /// Returns whether `self` contains a zero byte.
     #[inline]
     fn contains_zero(&self) -> bool { self.contains(0) }
+
+    /// Returns a reference to the first byte in `self` that equals `byte`.
+    fn first_eq(&self, byte: u8) -> Option<&u8>;
+
+    /// Returns a mutable reference to the first byte in `self` that equals
+    /// `byte`.
+    fn first_eq_mut(&mut self, byte: u8) -> Option<&mut u8>;
+
+    /// Returns a reference to the first byte in `self` that does not equal
+    /// `byte`.
+    fn first_ne(&self, byte: u8) -> Option<&u8>;
+
+    /// Returns a mutable reference to the first byte in `self` that does not
+    /// equal `byte`.
+    fn first_ne_mut(&mut self, byte: u8) -> Option<&mut u8>;
+
+    /// Returns a reference to the last byte in `self` that equals `byte`.
+    fn last_eq(&self, byte: u8) -> Option<&u8>;
+
+    /// Returns a mutable reference to the last byte in `self` that equals
+    /// `byte`.
+    fn last_eq_mut(&mut self, byte: u8) -> Option<&mut u8>;
+
+    /// Returns a reference to the last byte in `self` that does not equal
+    /// `byte`.
+    fn last_ne(&self, byte: u8) -> Option<&u8>;
+
+    /// Returns a mutable reference to the last byte in `self` that does not
+    /// equal `byte`.
+    fn last_ne_mut(&mut self, byte: u8) -> Option<&mut u8>;
 }
 
 impl Bytes for u8 {
@@ -56,6 +85,46 @@ impl Bytes for u8 {
 
     #[inline]
     fn contains(&self, byte: u8) -> bool { *self == byte }
+
+    #[inline]
+    fn first_eq(&self, byte: u8) -> Option<&u8> {
+        if self.is(byte) { Some(self) } else { None }
+    }
+
+    #[inline]
+    fn first_eq_mut(&mut self, byte: u8) -> Option<&mut u8> {
+        if self.is(byte) { Some(self) } else { None }
+    }
+
+    #[inline]
+    fn first_ne(&self, byte: u8) -> Option<&u8> {
+        if !self.is(byte) { Some(self) } else { None }
+    }
+
+    #[inline]
+    fn first_ne_mut(&mut self, byte: u8) -> Option<&mut u8> {
+        if !self.is(byte) { Some(self) } else { None }
+    }
+
+    #[inline]
+    fn last_eq(&self, byte: u8) -> Option<&u8> {
+        unimplemented!()
+    }
+
+    #[inline]
+    fn last_eq_mut(&mut self, byte: u8) -> Option<&mut u8> {
+        unimplemented!()
+    }
+
+    #[inline]
+    fn last_ne(&self, byte: u8) -> Option<&u8> {
+        unimplemented!()
+    }
+
+    #[inline]
+    fn last_ne_mut(&mut self, byte: u8) -> Option<&mut u8> {
+        unimplemented!()
+    }
 }
 
 // Alignment code used by the `bytecount` crate
@@ -117,6 +186,46 @@ impl Bytes for [u8] {
             return false;
         }
         batched! { self, byte, Bytes::contains, true }
+    }
+
+    #[inline]
+    fn first_eq(&self, byte: u8) -> Option<&u8> {
+        unimplemented!()
+    }
+
+    #[inline]
+    fn first_eq_mut(&mut self, byte: u8) -> Option<&mut u8> {
+        unimplemented!()
+    }
+
+    #[inline]
+    fn first_ne(&self, byte: u8) -> Option<&u8> {
+        unimplemented!()
+    }
+
+    #[inline]
+    fn first_ne_mut(&mut self, byte: u8) -> Option<&mut u8> {
+        unimplemented!()
+    }
+
+    #[inline]
+    fn last_eq(&self, byte: u8) -> Option<&u8> {
+        unimplemented!()
+    }
+
+    #[inline]
+    fn last_eq_mut(&mut self, byte: u8) -> Option<&mut u8> {
+        unimplemented!()
+    }
+
+    #[inline]
+    fn last_ne(&self, byte: u8) -> Option<&u8> {
+        unimplemented!()
+    }
+
+    #[inline]
+    fn last_ne_mut(&mut self, byte: u8) -> Option<&mut u8> {
+        unimplemented!()
     }
 }
 
