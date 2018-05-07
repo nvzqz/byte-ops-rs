@@ -11,10 +11,11 @@ contains all operations for this crate. As of this writing, they are:
 
 - `contains`: indicates whether _any byte_ in a value equals a certain byte.
 
-## SIMD Support
+## SIMD
 
 This crate contains [SIMD](https://en.wikipedia.org/wiki/SIMD)-accelerated
-implementations, which can be enabled via the `simd` feature:
+implementations, which can be enabled via the `simd` feature. These operations
+are performed on values of 128 bits (or more).
 
 ```toml
 [dependencies.byte-ops]
@@ -22,9 +23,15 @@ version  = "0.1.0"
 features = ["simd"]
 ```
 
-Some extra performance can be gained by enabling `avx` when targeting x86 or
-x86_64. This comes with a compatibility tradeoff. See [CPUs with
+### AVX
+
+When targeting x86, some extra performance can be gained by enabling [advanced
+vector extensions](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions).
+This allows for parallel operations on 256 bits. Note that this comes with a
+compatibility tradeoff. See [CPUs with
 AVX](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#CPUs_with_AVX).
+
+To enable AVX, set the following compilation environment variable:
 
 ```sh
 RUSTFLAGS="-C target-feature +avx"
